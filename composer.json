@@ -1,0 +1,17 @@
+{
+    "name": "computer/mymvc",
+    "authors": [
+        {
+            "name": "reza-dehghani",
+            "email": "iamreza@outlook.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "app\\": "./"
+        }
+    },
+    "require": {
+        "vlucas/phpdotenv": "^5.4"
+    }
+}
