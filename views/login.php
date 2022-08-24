@@ -1,19 +1,13 @@
-<h1>Contact Us</h1>
+<?php
+/** @var $model \app\models\User */
+?>
 
-<form action="" method="post">
-  <div class="mb-3">
-    <label for="InputEmail" class="form-label">Email address</label>
-    <input name="email" type="email" class="form-control" id="InputEmail" aria-describedby="emailHelp">
-    <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
-  </div>
-  <div class="mb-3">
-    <label for="InputName" class="form-label">Your Name</label>
-    <input name="name" type="text" class="form-control" id="InputName">
-  </div>
-  <div class="mb-3">
-    <label for="InputText" class="form-label">Your Name</label>
-    <textarea name="textarea" class="form-control" id="InputText"></textarea>
-  </div>
+<h1>Login</h1>
 
-  <button type="submit" class="btn btn-primary">Submit</button>
-</form>
+<?php $form = \app\core\form\Form::begin('', "post"); ?>
+
+<?= $form->field($model, 'email') ?>
+<?= $form->field($model, 'password')->passwordField() ?>
+<button type="submit" class="btn btn-primary">Submit</button>
+
+<?= app\core\form\Form::end() ?>
