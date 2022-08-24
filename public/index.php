@@ -5,7 +5,7 @@
  * 
  */
 
- 
+
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
@@ -26,9 +26,13 @@ $config =   [
         'user' => $_ENV['DB_USER'],
         'password' => $_ENV['DB_PASSWORD'],
     ]
-    ];
+];
 
 $app = new Application(dirname(__DIR__), $config);
+
+$app->on(Application::EVENT_BEFORE_REQUEST, function() {
+    echo "Before request";
+});
 
 $app->router->get('/', [SiteController::class, 'home']);
 $app->router->get('/contact', [SiteController::class, 'contact']);

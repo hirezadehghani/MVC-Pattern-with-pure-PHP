@@ -15,6 +15,11 @@ use app\core;
 
 class Application
 {
+    const EVENT_BEFORE_REQUEST = 'beforeRequest';
+    const EVENT_AFTER_REQUEST = 'afterRequest';
+
+
+    protected array $eventListeners = [];
     public string $layout = 'main';
     public static string $ROOT_DIR;
     public string $userClass;
@@ -44,14 +49,14 @@ class Application
         if ($primaryValue) {
             $primaryKey = $this->userClass::primaryKey();
             $this->user = $this->userClass::findOne([$primaryKey => $primaryValue]);
-        }
-        else   {
+        } else {
             $this->user = null;
         }
     }
 
     public function run()
     {
+        $this->triggerEvent(self::EVENT_BEFORE_REQUEST);
         try {
             echo $this->router->resolve();
         } catch (\Throwable $e) {
@@ -65,6 +70,15 @@ class Application
     public function getController()
     {
         return $this->controller;
+    }
+
+    public function triggerEvent($eventName)
+    {
+        $callbacks = $this->eventListeners[$eventName] ?? [];
+        foreach ($callbacks as $callback) 
+        {
+        call_user_func($callback);
+        }
     }
 
     public function setController($controller)
@@ -90,5 +104,10 @@ class Application
     public static function isGuest()
     {
         return !self::$app->user;
+    }
+
+    public function on($eventName, $callback)
+    {
+        $this->eventListeners[$eventName][] = $callback;
     }
 }
